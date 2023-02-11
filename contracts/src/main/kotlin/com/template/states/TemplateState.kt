@@ -11,7 +11,19 @@ import net.corda.core.identity.Party
 // *********
 @BelongsToContract(TemplateContract::class)
 data class TemplateState(val msg: String,
+                         val value: Int,
                          val sender: Party,
                          val receiver: Party,
                          override val participants: List<AbstractParty> = listOf(sender,receiver)
 ) : ContractState
+
+
+@BelongsToContract(TemplateContract::class)
+class IOUState(
+    val value: Int,
+    val lender: Party,
+    val borrower: Party
+): ContractState {
+    override val participants: List<AbstractParty>
+        get() = listOf(lender, borrower)
+}
